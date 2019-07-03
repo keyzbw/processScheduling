@@ -189,6 +189,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="prioritySchedulingDlg.h" />
     <ClInclude Include="processScheduling.h" />
     <ClInclude Include="processSchedulingDlg.h" />
     <ClInclude Include="Resource.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="prioritySchedulingDlg.cpp" />
     <ClCompile Include="processScheduling.cpp" />
     <ClCompile Include="processSchedulingDlg.cpp" />
     <ClCompile Include="schedulingService.cpp" />

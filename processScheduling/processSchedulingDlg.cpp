@@ -6,6 +6,7 @@
 #include "processScheduling.h"
 #include "processSchedulingDlg.h"
 #include "afxdialogex.h"
+#include "prioritySchedulingDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -154,8 +155,10 @@ HCURSOR CprocessSchedulingDlg::OnQueryDragIcon()
 }
 
 
-
+//优先级调度算法页面
 void CprocessSchedulingDlg::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	prioritySchedulingDlg pD;
+	pD.DoModal();
 }

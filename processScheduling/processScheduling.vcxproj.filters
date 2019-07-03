@@ -39,6 +39,9 @@
     <ClInclude Include="processSchedulingDlg.h">
       <Filter>Dlg</Filter>
     </ClInclude>
+    <ClInclude Include="prioritySchedulingDlg.h">
+      <Filter>Dlg</Filter>
+    </ClInclude>
     <ClInclude Include="schedulingService.h">
       <Filter>Service</Filter>
     </ClInclude>
@@ -51,6 +54,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="processSchedulingDlg.cpp">
+      <Filter>Dlg</Filter>
+    </ClCompile>
+    <ClCompile Include="prioritySchedulingDlg.cpp">
       <Filter>Dlg</Filter>
     </ClCompile>
     <ClCompile Include="schedulingService.cpp">
