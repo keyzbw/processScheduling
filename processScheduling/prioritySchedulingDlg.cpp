@@ -5,7 +5,7 @@
 #include "processScheduling.h"
 #include "prioritySchedulingDlg.h"
 #include "afxdialogex.h"
-
+#include "resource.h"
 
 // prioritySchedulingDlg 对话框
 
@@ -13,6 +13,10 @@ IMPLEMENT_DYNAMIC(prioritySchedulingDlg, CDialogEx)
 
 prioritySchedulingDlg::prioritySchedulingDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_PRIORITYSCHEDULINGDLG, pParent)
+	, clock(0)
+	, cpuRate(_T(""))
+	, ioRate(_T(""))
+	, clockRate(1)
 {
 
 }
@@ -29,11 +33,19 @@ void prioritySchedulingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST4, m_list3);
 	DDX_Control(pDX, IDC_LIST1, m_list4);
 	DDX_Control(pDX, IDC_LIST5, m_list5);
+	DDX_Text(pDX, IDC_EDIT1, clock);
+	DDX_Text(pDX, IDC_EDIT2, cpuRate);
+	DDX_Text(pDX, IDC_EDIT3, ioRate);
+	DDX_Text(pDX, IDC_EDIT4, clockRate);
 }
 
 
 BEGIN_MESSAGE_MAP(prioritySchedulingDlg, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT1, &prioritySchedulingDlg::OnEnChangeEdit1)
+	ON_BN_CLICKED(IDC_BUTTON3, &prioritySchedulingDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON1, &prioritySchedulingDlg::OnBnClickedButton1)
+	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON2, &prioritySchedulingDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -126,3 +138,43 @@ BOOL prioritySchedulingDlg::OnInitDialog()
 }
 
 
+
+//继续
+void prioritySchedulingDlg::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);//数据从窗口更新
+	SetTimer(1, 1000 / clockRate, NULL);
+	UpdateData(FALSE);//数据更新至窗口
+}
+
+//重建进程
+void prioritySchedulingDlg::OnBnClickedButton1()
+{
+	UpdateData(TRUE);//数据从窗口更新
+	clock = 0;
+	SetTimer(1, 1000 / clockRate, NULL);
+	UpdateData(FALSE);//数据更新至窗口
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+//定时器函数
+void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	switch (nIDEvent)
+	{
+	case 1:
+		clock++;
+		break;
+	}
+	UpdateData(FALSE);//数据更新至窗口
+	CDialogEx::OnTimer(nIDEvent);
+}
+
+//暂停
+void prioritySchedulingDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	KillTimer(1);
+}

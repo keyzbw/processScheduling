@@ -36,4 +36,19 @@ public:
 	afx_msg void OnEnChangeEdit3();
 	// 完成进程
 	CListCtrl m_list5;
+	// 时钟
+	int clock;
+	// CUP利用率
+	CString cpuRate;
+	// IO利用率
+	CString ioRate;
+	// 时钟速度
+	double clockRate;
+protected:
+	afx_msg LRESULT OnTimer(WPARAM wParam, LPARAM lParam);
+public:
+	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnBnClickedButton2();
 };

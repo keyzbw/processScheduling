@@ -13,6 +13,11 @@ IMPLEMENT_DYNAMIC(RR_SchedulingDlg, CDialogEx)
 
 RR_SchedulingDlg::RR_SchedulingDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_RRSCHEDULINGDLG, pParent)
+	, clock(0)
+	, cupRate(_T(""))
+	, ioRate(_T(""))
+	, timeSlice(1)
+	, clockRate(1)
 {
 
 }
@@ -29,10 +34,19 @@ void RR_SchedulingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST4, m_list3);
 	DDX_Control(pDX, IDC_LIST1, m_list4);
 	DDX_Control(pDX, IDC_LIST5, m_list5);
+	DDX_Text(pDX, IDC_EDIT1, clock);
+	DDX_Text(pDX, IDC_EDIT2, cupRate);
+	DDX_Text(pDX, IDC_EDIT3, ioRate);
+	DDX_Text(pDX, IDC_EDIT6, timeSlice);
+	DDX_Text(pDX, IDC_EDIT4, clockRate);
 }
 
 
 BEGIN_MESSAGE_MAP(RR_SchedulingDlg, CDialogEx)
+	ON_BN_CLICKED(IDC_BUTTON1, &RR_SchedulingDlg::OnBnClickedButton1)
+	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON3, &RR_SchedulingDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON2, &RR_SchedulingDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -108,4 +122,45 @@ BOOL RR_SchedulingDlg::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
+}
+
+//重建进程
+void RR_SchedulingDlg::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);//数据从窗口更新
+	clock = 0;
+	SetTimer(1, 1000 / clockRate, NULL);
+	UpdateData(FALSE);//数据更新至窗口
+}
+
+//定时器
+void RR_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	switch (nIDEvent)
+	{
+	case 1:
+		clock++;
+		break;
+	}
+	UpdateData(FALSE);//数据更新至窗口
+	CDialogEx::OnTimer(nIDEvent);
+}
+
+//继续
+void RR_SchedulingDlg::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);//数据从窗口更新
+	SetTimer(1, 1000 / clockRate, NULL);
+	UpdateData(FALSE);//数据更新至窗口
+}
+
+//暂停
+void RR_SchedulingDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	KillTimer(1);
 }

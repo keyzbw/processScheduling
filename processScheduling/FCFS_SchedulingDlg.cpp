@@ -13,6 +13,10 @@ IMPLEMENT_DYNAMIC(FCFS_SchedulingDlg, CDialogEx)
 
 FCFS_SchedulingDlg::FCFS_SchedulingDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_FCFSSCHEDULINGDLG, pParent)
+	, clock(0)
+	, cpuRate(_T(""))
+	, ioRate(_T(""))
+	, clockRate(1)
 {
 
 }
@@ -29,10 +33,18 @@ void FCFS_SchedulingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST4, m_list3);
 	DDX_Control(pDX, IDC_LIST1, m_list4);
 	DDX_Control(pDX, IDC_LIST5, m_list5);
+	DDX_Text(pDX, IDC_EDIT1, clock);
+	DDX_Text(pDX, IDC_EDIT2, cpuRate);
+	DDX_Text(pDX, IDC_EDIT3, ioRate);
+	DDX_Text(pDX, IDC_EDIT4, clockRate);
 }
 
 
 BEGIN_MESSAGE_MAP(FCFS_SchedulingDlg, CDialogEx)
+	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON1, &FCFS_SchedulingDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &FCFS_SchedulingDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &FCFS_SchedulingDlg::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -110,3 +122,43 @@ BOOL FCFS_SchedulingDlg::OnInitDialog()
 				  // 异常: OCX 属性页应返回 FALSE
 }
 
+
+
+void FCFS_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	switch (nIDEvent)
+	{
+	case 1:
+		clock++;
+		break;
+	}
+	UpdateData(FALSE);//数据更新至窗口
+	CDialogEx::OnTimer(nIDEvent);
+}
+
+
+void FCFS_SchedulingDlg::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);//数据从窗口更新
+	clock = 0;
+	SetTimer(1, 1000 / clockRate, NULL);
+	UpdateData(FALSE);//数据更新至窗口
+}
+
+//暂停
+void FCFS_SchedulingDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	KillTimer(1);
+}
+
+//继续
+void FCFS_SchedulingDlg::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);//数据从窗口更新
+	SetTimer(1, 1000 / clockRate, NULL);
+	UpdateData(FALSE);//数据更新至窗口
+}
