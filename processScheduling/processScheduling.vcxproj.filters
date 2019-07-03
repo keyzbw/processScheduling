@@ -45,6 +45,12 @@
     <ClInclude Include="schedulingService.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="FCFS_SchedulingDlg.h">
+      <Filter>Dlg</Filter>
+    </ClInclude>
+    <ClInclude Include="RR_SchedulingDlg.h">
+      <Filter>Dlg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="processScheduling.cpp">
@@ -61,6 +67,12 @@
     </ClCompile>
     <ClCompile Include="schedulingService.cpp">
       <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="FCFS_SchedulingDlg.cpp">
+      <Filter>Dlg</Filter>
+    </ClCompile>
+    <ClCompile Include="RR_SchedulingDlg.cpp">
+      <Filter>Dlg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

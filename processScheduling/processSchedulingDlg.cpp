@@ -7,6 +7,8 @@
 #include "processSchedulingDlg.h"
 #include "afxdialogex.h"
 #include "prioritySchedulingDlg.h"
+#include "FCFS_SchedulingDlg.h"
+#include "RR_SchedulingDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -66,6 +68,8 @@ BEGIN_MESSAGE_MAP(CprocessSchedulingDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CprocessSchedulingDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON3, &CprocessSchedulingDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON2, &CprocessSchedulingDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -161,4 +165,20 @@ void CprocessSchedulingDlg::OnBnClickedButton1()
 	// TODO: 在此添加控件通知处理程序代码
 	prioritySchedulingDlg pD;
 	pD.DoModal();
+}
+
+
+void CprocessSchedulingDlg::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	FCFS_SchedulingDlg FD;
+	FD.DoModal();
+}
+
+
+void CprocessSchedulingDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	RR_SchedulingDlg RD;
+	RD.DoModal();
 }
