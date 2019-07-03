@@ -51,6 +51,12 @@
     <ClInclude Include="RR_SchedulingDlg.h">
       <Filter>Dlg</Filter>
     </ClInclude>
+    <ClInclude Include="PCB.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorityScheduling.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="processScheduling.cpp">
@@ -73,6 +79,12 @@
     </ClCompile>
     <ClCompile Include="RR_SchedulingDlg.cpp">
       <Filter>Dlg</Filter>
+    </ClCompile>
+    <ClCompile Include="PCB.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PriorityScheduling.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
