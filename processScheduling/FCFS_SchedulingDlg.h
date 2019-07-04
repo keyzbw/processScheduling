@@ -1,6 +1,6 @@
 #pragma once
 #include "afxcmn.h"
-
+#include "PCBPointer.h"
 
 // FCFS_SchedulingDlg 对话框
 
@@ -42,6 +42,8 @@ public:
 	CString ioRate;
 	// 时钟速度
 	double clockRate;
+	//进程控制块列表
+	PCBPointer* PP;
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();

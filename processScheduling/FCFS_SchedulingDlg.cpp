@@ -6,7 +6,6 @@
 #include "FCFS_SchedulingDlg.h"
 #include "afxdialogex.h"
 #include "resource.h"
-#include "PCB.h"
 #include "schedulingService.h"
 // FCFS_SchedulingDlg 对话框
 
@@ -127,11 +126,18 @@ void FCFS_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 	{
 	case 1:
 		clock++;
-		PCB* pend, ready, finish, ioa, iob;
+		/*
+		PCBPointer temp;
 		schedulingService ss;
+		CString createtime;
+		ss.PCBinit(clock,PP);
+		PP=ss.FIFO(clock, PP);
+		temp = PP;
 		//执行进程显示
-		m_list2.SetItemText(0, 1, _T("P1"));
-		m_list2.SetItemText(0, 2, _T("P1"));
+		m_list2.SetItemText(0, 1, temp.ready->name);
+		createtime.Format(_T("%d"), temp.ready->createtime);
+		m_list2.SetItemText(0, 2, createtime);
+		*/
 		//就绪进程显示
 
 		//阻塞进程显示
@@ -149,7 +155,19 @@ void FCFS_SchedulingDlg::OnBnClickedButton1()
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);//数据从窗口更新
 	clock = 0;
-	SetTimer(1, 1000 / clockRate, NULL);
+	schedulingService ss;
+	PP=ss.createPCB(5);
+	PCB* p = PP->pend;
+	int i = 0;
+	CString createTime;
+	while (p != NULL) {
+		m_list3.InsertItem(i, _T(""));
+		m_list3.SetItemText(i, 1,p->name);
+		createTime.Format(_T("%d"), p->createtime);
+		m_list3.SetItemText(i, 2, createTime);
+		p = p->next;
+	}
+	//SetTimer(1, 1000 / clockRate, NULL);
 	UpdateData(FALSE);//数据更新至窗口
 }
 

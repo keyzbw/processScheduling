@@ -57,6 +57,9 @@
     <ClInclude Include="PCB.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="PCBPointer.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="processScheduling.cpp">
@@ -81,6 +84,9 @@
       <Filter>Dlg</Filter>
     </ClCompile>
     <ClCompile Include="PCB.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="PCBPointer.cpp">
       <Filter>Model</Filter>
     </ClCompile>
   </ItemGroup>
