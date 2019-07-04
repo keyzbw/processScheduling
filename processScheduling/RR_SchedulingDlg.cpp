@@ -65,58 +65,53 @@ BOOL RR_SchedulingDlg::OnInitDialog()
 	// 初始化列表1
 	m_list1.SetExtendedStyle(m_list1.GetExtendedStyle() |
 		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-	m_list1.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list1.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list1.InsertColumn(2, _T("优先级"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list1.InsertColumn(3, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list1.InsertColumn(4, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list1.InsertColumn(5, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
+	m_list1.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list1.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list1.InsertColumn(2, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list1.InsertColumn(3, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list1.InsertColumn(4, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
 
 	// 初始化列表2
 	m_list2.SetExtendedStyle(m_list2.GetExtendedStyle() |
 		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-	m_list2.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list2.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list2.InsertColumn(2, _T("优先级"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list2.InsertColumn(3, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list2.InsertColumn(4, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list2.InsertColumn(5, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
+	m_list2.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list2.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list2.InsertColumn(2, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list2.InsertColumn(3, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list2.InsertColumn(4, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
 	m_list2.InsertItem(0, _T(""));
 	m_list2.SetItemText(0, 0, _T("执行进程"));
 
 	// 初始化列表3
 	m_list3.SetExtendedStyle(m_list3.GetExtendedStyle() |
 		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-	m_list3.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list3.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list3.InsertColumn(2, _T("优先级"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list3.InsertColumn(3, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list3.InsertColumn(4, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list3.InsertColumn(5, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
+	m_list3.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list3.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list3.InsertColumn(2, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list3.InsertColumn(3, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list3.InsertColumn(4, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
 	m_list3.InsertItem(0, _T(""));
 	m_list3.SetItemText(0, 0, _T("就绪进程"));
 
 	// 初始化列表4
 	m_list4.SetExtendedStyle(m_list4.GetExtendedStyle() |
 		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-	m_list4.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list4.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list4.InsertColumn(2, _T("优先级"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list4.InsertColumn(3, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list4.InsertColumn(4, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list4.InsertColumn(5, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
+	m_list4.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list4.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list4.InsertColumn(2, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list4.InsertColumn(3, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list4.InsertColumn(4, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
 	m_list4.InsertItem(0, _T(""));
 	m_list4.SetItemText(0, 0, _T("阻塞进程"));
 
 	// 初始化列表5
 	m_list5.SetExtendedStyle(m_list5.GetExtendedStyle() |
 		LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-	m_list5.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list5.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list5.InsertColumn(2, _T("优先级"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list5.InsertColumn(3, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list5.InsertColumn(4, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
-	m_list5.InsertColumn(5, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 6);
+	m_list5.InsertColumn(0, _T("队列"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list5.InsertColumn(1, _T("进程名"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list5.InsertColumn(2, _T("创建时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list5.InsertColumn(3, _T("已运行时间"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
+	m_list5.InsertColumn(4, _T("进程状态"), LVCFMT_CENTER, (rect.Width() - 30) / 5);
 	m_list5.InsertItem(0, _T(""));
 	m_list5.SetItemText(0, 0, _T("完成进程"));
 
