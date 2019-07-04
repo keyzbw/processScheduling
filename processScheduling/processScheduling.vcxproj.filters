@@ -57,6 +57,9 @@
     <ClInclude Include="PriorityScheduling.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="PCBPointer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="processScheduling.cpp">
@@ -84,6 +87,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="PriorityScheduling.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PCBPointer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

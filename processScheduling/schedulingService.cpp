@@ -23,12 +23,29 @@ void schedulingService::PCBinit(int n, PCB* pend, PCB* ready, PCB* finish, PCB* 
 }
 }
 
-void schedulingService::FIFO(int time, PCB * pend, PCB * ready, PCB * finish, PCB * ioa, PCB * iob)
+PCBPointer schedulingService::FIFO(int time, PCB * pend, PCB * ready, PCB * finish, PCB * ioa, PCB * iob)
 {
 	PCB * tmppend = pend;
+	//ready尾指针
 	PCB * tmpready = ready;
+	while (tmpready->next != NULL) {
+		tmpready = tmpready->next;
+	}
+	//ioa尾指针
 	PCB * tmpioa = ioa;
+	while (tmpioa->next != NULL) {
+		tmpioa = tmpioa->next;
+	}
+	//iob尾指针
 	PCB * tmpiob = iob;
+	while (tmpiob->next != NULL) {
+		tmpiob = tmpiob->next;
+	}
+	//finish尾指针
+	PCB * tmpfinish = finish;
+	while (tmpfinish->next != NULL) {
+		tmpfinish = tmpfinish->next;
+	}
 	//pend到时间的加入ioa或iob
 	while (pend!=NULL && pend->createtime == time) {
 		tmppend = pend->next;
@@ -46,8 +63,33 @@ void schedulingService::FIFO(int time, PCB * pend, PCB * ready, PCB * finish, PC
 			tmpiob = tmpiob->next;
 		}
 	//ioa或iob执行完io操作的进入ready
+		ioa->neediotime -= 1;
+		if (ioa->neediotime == 0) {
+			tmpready->next = ioa;
+			tmpready = tmpready->next;
+			ioa = ioa->next;
+			ioa->state = "进行A资源IO中";
+			tmpready->next = NULL;
+		}
+		iob->neediotime -= 1;
+		if (iob->neediotime == 0) {
+			tmpready->next = iob;
+			tmpready = tmpready->next;
+			iob = iob->next;
+			iob->state = "进行B资源IO中";
+			tmpready->next = NULL;
+		}
 	//ready里执行完cpu操作的进入finish
+		ready->needcputime -= 1;
+		if (ready->needcputime == 0) {
+			ready->state = "已完成";
+			tmpfinish->next = ready;
+			tmpfinish = tmpfinish->next;
+			tmpfinish->next = NULL;
+			ready = ready->next;
+		}
 	}
+	return PCBPointer(pend, ready, finish, ioa, iob);
 }
 
 
