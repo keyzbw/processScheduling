@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FCFS_SchedulingDlg.h" />
+    <ClInclude Include="PCB.h" />
     <ClInclude Include="prioritySchedulingDlg.h" />
     <ClInclude Include="processScheduling.h" />
     <ClInclude Include="processSchedulingDlg.h" />
@@ -201,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FCFS_SchedulingDlg.cpp" />
+    <ClCompile Include="PCB.cpp" />
     <ClCompile Include="prioritySchedulingDlg.cpp" />
     <ClCompile Include="processScheduling.cpp" />
     <ClCompile Include="processSchedulingDlg.cpp" />

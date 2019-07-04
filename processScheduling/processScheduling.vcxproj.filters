@@ -19,6 +19,9 @@
     <Filter Include="Service">
       <UniqueIdentifier>{695733e3-00e6-4804-bbfd-c4a7051bb989}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{fb0c6e8f-c6f2-4b2a-8002-403ffecfd4b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -51,6 +54,9 @@
     <ClInclude Include="RR_SchedulingDlg.h">
       <Filter>Dlg</Filter>
     </ClInclude>
+    <ClInclude Include="PCB.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="processScheduling.cpp">
@@ -73,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="RR_SchedulingDlg.cpp">
       <Filter>Dlg</Filter>
+    </ClCompile>
+    <ClCompile Include="PCB.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
