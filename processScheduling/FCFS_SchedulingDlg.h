@@ -1,6 +1,6 @@
 #pragma once
 #include "afxcmn.h"
-
+#include "PCBPointer.h"
 
 // FCFS_SchedulingDlg 对话框
 
@@ -34,4 +34,18 @@ public:
 	// 完成进程
 	CListCtrl m_list5;
 	afx_msg void OnLvnItemchangedList2(NMHDR *pNMHDR, LRESULT *pResult);
+	// 时钟
+	int clock;
+	// cpu利用率
+	CString cpuRate;
+	// IO利用率
+	CString ioRate;
+	// 时钟速度
+	double clockRate;
+	//进程控制块列表
+	PCBPointer* PP;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedButton3();
 };

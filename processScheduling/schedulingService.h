@@ -6,7 +6,9 @@ class schedulingService
 public:
 	schedulingService();
 	PCBPointer* createPCB(int n);
-	PCBPointer* FIFO(int time,PCB* pend, PCB* ready, PCB* finish, PCB* ioa, PCB* iob);
+	void FIFO(int time,PCBPointer* PP);
+	void RR2(int time, PCBPointer* PP);
+	void PRIORITY(int time, PCBPointer* PP);
 	~schedulingService();
 };
 

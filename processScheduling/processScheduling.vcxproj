@@ -192,7 +192,6 @@
     <ClInclude Include="FCFS_SchedulingDlg.h" />
     <ClInclude Include="PCB.h" />
     <ClInclude Include="PCBPointer.h" />
-    <ClInclude Include="PriorityScheduling.h" />
     <ClInclude Include="prioritySchedulingDlg.h" />
     <ClInclude Include="processScheduling.h" />
     <ClInclude Include="processSchedulingDlg.h" />
@@ -206,7 +205,6 @@
     <ClCompile Include="FCFS_SchedulingDlg.cpp" />
     <ClCompile Include="PCB.cpp" />
     <ClCompile Include="PCBPointer.cpp" />
-    <ClCompile Include="PriorityScheduling.cpp" />
     <ClCompile Include="prioritySchedulingDlg.cpp" />
     <ClCompile Include="processScheduling.cpp" />
     <ClCompile Include="processSchedulingDlg.cpp" />

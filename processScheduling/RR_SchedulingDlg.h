@@ -33,4 +33,18 @@ public:
 	CListCtrl m_list4;
 	// 完成进程
 	CListCtrl m_list5;
+	// 时钟
+	int clock;
+	// CPU利用率
+	CString cupRate;
+	// io利用率
+	CString ioRate;
+	// 时间片
+	int timeSlice;
+	// 时钟速率
+	double clockRate;
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedButton2();
 };
