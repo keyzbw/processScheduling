@@ -14,8 +14,8 @@ IMPLEMENT_DYNAMIC(FCFS_SchedulingDlg, CDialogEx)
 FCFS_SchedulingDlg::FCFS_SchedulingDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_FCFSSCHEDULINGDLG, pParent)
 	, clock(0)
-	, cpuRate(_T(""))
-	, ioRate(_T(""))
+	, cpuRate(_T("100.00"))
+	, ioRate(_T("100.00"))
 	, clockRate(1)
 {
 
@@ -206,6 +206,10 @@ void FCFS_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			p = p->next;
 			i++;
 		}
+		//cup利用率显示
+		double cRate;
+		cRate = (double)PP->cpuratio / (double)clock;
+		cpuRate.Format(_T("%0.2lf"),cRate*100);
 		break;
 	}
 	UpdateData(FALSE);//数据更新至窗口
@@ -223,8 +227,6 @@ void FCFS_SchedulingDlg::OnBnClickedButton1()
 	schedulingService ss;
 	PP=ss.createPCB(5);
 
-	//执行进程显示
-	
 	SetTimer(1, 1000 / clockRate, NULL);
 	UpdateData(FALSE);//数据更新至窗口
 }

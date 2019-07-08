@@ -1,6 +1,6 @@
 #pragma once
 #include "afxcmn.h"
-
+#include "PCBPointer.h"
 
 // prioritySchedulingDlg 对话框
 
@@ -44,8 +44,9 @@ public:
 	CString ioRate;
 	// 时钟速度
 	double clockRate;
+	//PCB队列指针
+	PCBPointer* PP;
 protected:
-	afx_msg LRESULT OnTimer(WPARAM wParam, LPARAM lParam);
 public:
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton1();

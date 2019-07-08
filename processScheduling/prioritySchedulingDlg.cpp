@@ -6,7 +6,7 @@
 #include "prioritySchedulingDlg.h"
 #include "afxdialogex.h"
 #include "resource.h"
-
+#include "schedulingService.h"
 // prioritySchedulingDlg 对话框
 
 IMPLEMENT_DYNAMIC(prioritySchedulingDlg, CDialogEx)
@@ -153,6 +153,8 @@ void prioritySchedulingDlg::OnBnClickedButton1()
 {
 	UpdateData(TRUE);//数据从窗口更新
 	clock = 0;
+	schedulingService ss;
+	PP = ss.createPCB(5);
 	SetTimer(1, 1000 / clockRate, NULL);
 	UpdateData(FALSE);//数据更新至窗口
 	// TODO: 在此添加控件通知处理程序代码
@@ -165,10 +167,96 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 	switch (nIDEvent)
 	{
 	case 1:
-		clock++;
+		//清除列表数据
+		m_list2.DeleteAllItems();
+		m_list3.DeleteAllItems();
+		m_list4.DeleteAllItems();
+		m_list5.DeleteAllItems();
+		schedulingService ss;
+		ss.PRIORITY(clock, PP);
+		PCB* p = PP->ready;
+		int i = 0;
+		CString createTime, runTime;
+
+		//执行进程显示
+		m_list2.InsertItem(0, _T(""));
+		m_list2.SetItemText(0, 0, _T("执行进程"));
+		if (p != NULL) {
+			m_list2.SetItemText(0, 1, p->name);
+			createTime.Format(_T("%d"), p->createtime);
+			m_list2.SetItemText(0, 2, createTime);
+			runTime.Format(_T("%d"), p->needcputime);
+			m_list2.SetItemText(0, 3, runTime);
+			m_list2.SetItemText(0, 4, p->state);
+			//就绪进程显示
+			i = 1;
+			m_list3.InsertItem(0, _T(""));
+			m_list3.SetItemText(0, 0, _T("就绪进程"));
+			while (p->next != NULL) {
+				p = p->next;
+				m_list3.InsertItem(i, _T(""));
+				m_list3.SetItemText(i, 1, p->name);
+				createTime.Format(_T("%d"), p->createtime);
+				m_list3.SetItemText(i, 2, createTime);
+				runTime.Format(_T("%d"), p->needcputime);
+				m_list3.SetItemText(i, 3, runTime);
+				m_list3.SetItemText(i, 4, p->state);
+				i++;
+			}
+		}
+		//阻塞进程显示
+		i = 1;
+		m_list4.InsertItem(0, _T(""));
+		m_list4.SetItemText(0, 0, _T("阻塞进程"));
+		p = PP->ioa;
+		while (p != NULL) {
+			m_list4.InsertItem(i, _T(""));
+			m_list4.SetItemText(i, 1, p->name);
+			createTime.Format(_T("%d"), p->createtime);
+			m_list4.SetItemText(i, 2, createTime);
+			runTime.Format(_T("%d"), p->neediotime);
+			m_list4.SetItemText(i, 3, runTime);
+			m_list4.SetItemText(i, 4, p->state);
+			p = p->next;
+			i++;
+		}
+		p = PP->iob;
+		while (p != NULL) {
+			m_list4.InsertItem(i, _T(""));
+			m_list4.SetItemText(i, 1, p->name);
+			createTime.Format(_T("%d"), p->createtime);
+			m_list4.SetItemText(i, 2, createTime);
+			runTime.Format(_T("%d"), p->neediotime);
+			m_list4.SetItemText(i, 3, runTime);
+			m_list4.SetItemText(i, 4, p->state);
+			p = p->next;
+			i++;
+		}
+		//完成进程显示
+		i = 1;
+		m_list5.InsertItem(0, _T(""));
+		m_list5.SetItemText(0, 0, _T("完成进程"));
+		p = PP->finish;
+		while (p != NULL) {
+			m_list5.InsertItem(i, _T(""));
+			m_list5.SetItemText(i, 1, p->name);
+			createTime.Format(_T("%d"), p->createtime);
+			m_list5.SetItemText(i, 2, createTime);
+			runTime.Format(_T("%d"), p->count);
+			m_list5.SetItemText(i, 3, runTime);
+			m_list5.SetItemText(i, 4, p->state);
+			p = p->next;
+			i++;
+		}
+		//cup利用率显示
+		double cRate;
+		cRate = (double)PP->cpuratio / (double)clock;
+		cpuRate.Format(_T("%0.2lf"), cRate * 100);
 		break;
 	}
 	UpdateData(FALSE);//数据更新至窗口
+					  //时钟增加
+	clock++;
 	CDialogEx::OnTimer(nIDEvent);
 }
 

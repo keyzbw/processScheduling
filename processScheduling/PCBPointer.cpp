@@ -14,6 +14,9 @@ PCBPointer::PCBPointer(PCB * pend, PCB * ready, PCB * finish, PCB * ioa, PCB * i
 	this->finish = finish;
 	this->ioa = ioa;
 	this->iob = iob;
+	this->cpuratio = 0;
+	this->ioaratio = 0;
+	this->iobratio = 0;
 }
 
 PCBPointer::~PCBPointer()
