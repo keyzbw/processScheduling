@@ -8,8 +8,10 @@ public:
 	CString name;
 	//生成时间
 	int createtime;
-	//优先级or时间片时长
+	//优先级
 	int prio_round;
+	//时间片时长
+	int timeSlice;
 	//已占用CPU时间（本次）
 	int cputime;
 	//计数器
@@ -26,7 +28,7 @@ public:
 	PCB* next;
 
 
-	PCB(CString name, int createtime, int prio_round, int cputime, int count, int needcputime, int neediotime, int iotype, CString state, PCB* next);
+	PCB(CString name, int createtime, int prio_round, int timeSlice, int cputime, int count, int needcputime, int neediotime, int iotype, CString state, PCB* next);
 	PCB();
 	~PCB();
 };

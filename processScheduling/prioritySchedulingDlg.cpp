@@ -176,7 +176,7 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 		ss.PRIORITY(clock, PP);
 		PCB* p = PP->ready;
 		int i = 0;
-		CString createTime, runTime;
+		CString createTime, runTime,priority;
 
 		//执行进程显示
 		m_list2.InsertItem(0, _T(""));
@@ -184,10 +184,12 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 		if (p != NULL) {
 			m_list2.SetItemText(0, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
-			m_list2.SetItemText(0, 2, createTime);
+			priority.Format(_T("%d"), p->prio_round);
+			m_list2.SetItemText(0, 2, priority);
+			m_list2.SetItemText(0, 3, createTime);
 			runTime.Format(_T("%d"), p->needcputime);
-			m_list2.SetItemText(0, 3, runTime);
-			m_list2.SetItemText(0, 4, p->state);
+			m_list2.SetItemText(0, 4, runTime);
+			m_list2.SetItemText(0, 5, p->state);
 			//就绪进程显示
 			i = 1;
 			m_list3.InsertItem(0, _T(""));
@@ -197,10 +199,12 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 				m_list3.InsertItem(i, _T(""));
 				m_list3.SetItemText(i, 1, p->name);
 				createTime.Format(_T("%d"), p->createtime);
-				m_list3.SetItemText(i, 2, createTime);
+				priority.Format(_T("%d"), p->prio_round);
+				m_list3.SetItemText(i, 2, priority);
+				m_list3.SetItemText(i, 3, createTime);
 				runTime.Format(_T("%d"), p->needcputime);
-				m_list3.SetItemText(i, 3, runTime);
-				m_list3.SetItemText(i, 4, p->state);
+				m_list3.SetItemText(i, 4, runTime);
+				m_list3.SetItemText(i, 5, p->state);
 				i++;
 			}
 		}
@@ -213,10 +217,12 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list4.InsertItem(i, _T(""));
 			m_list4.SetItemText(i, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
-			m_list4.SetItemText(i, 2, createTime);
+			priority.Format(_T("%d"), p->prio_round);
+			m_list4.SetItemText(i, 2, priority);
+			m_list4.SetItemText(i, 3, createTime);
 			runTime.Format(_T("%d"), p->neediotime);
-			m_list4.SetItemText(i, 3, runTime);
-			m_list4.SetItemText(i, 4, p->state);
+			m_list4.SetItemText(i, 4, runTime);
+			m_list4.SetItemText(i, 5, p->state);
 			p = p->next;
 			i++;
 		}
@@ -225,10 +231,12 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list4.InsertItem(i, _T(""));
 			m_list4.SetItemText(i, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
-			m_list4.SetItemText(i, 2, createTime);
+			priority.Format(_T("%d"), p->prio_round);
+			m_list4.SetItemText(i, 2, priority);
 			runTime.Format(_T("%d"), p->neediotime);
-			m_list4.SetItemText(i, 3, runTime);
-			m_list4.SetItemText(i, 4, p->state);
+			m_list4.SetItemText(i, 3, createTime);
+			m_list4.SetItemText(i, 4, runTime);
+			m_list4.SetItemText(i, 5, p->state);
 			p = p->next;
 			i++;
 		}
@@ -240,11 +248,13 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 		while (p != NULL) {
 			m_list5.InsertItem(i, _T(""));
 			m_list5.SetItemText(i, 1, p->name);
+			priority.Format(_T("%d"), p->prio_round);
+			m_list5.SetItemText(i, 2, priority);
 			createTime.Format(_T("%d"), p->createtime);
-			m_list5.SetItemText(i, 2, createTime);
+			m_list5.SetItemText(i, 3, createTime);
 			runTime.Format(_T("%d"), p->count);
-			m_list5.SetItemText(i, 3, runTime);
-			m_list5.SetItemText(i, 4, p->state);
+			m_list5.SetItemText(i, 4, runTime);
+			m_list5.SetItemText(i, 5, p->state);
 			p = p->next;
 			i++;
 		}

@@ -18,24 +18,25 @@ PCBPointer* schedulingService::createPCB(int n)
 	//创建表头
 	str.Format(_T("%d"), 0);
 	createtime += int(rand() % 4);
-	int prio_round = int(rand() % 20);
+	int prio_round = int(rand() % 5);
 	int needcputime = int(rand() % 10 + 1);
 	int neediotime = (int)(rand() % 10+1);
-	PCB *pcb = new PCB(_T("进程") + str + _T("号"), createtime, prio_round, 0, 0, needcputime, neediotime, (int)(rand() % 2), _T("等待中"), NULL);
+	PCB *pcb = new PCB(_T("进程") + str + _T("号"), createtime, prio_round,0, 0, 0, needcputime, neediotime, (int)(rand() % 2), _T("等待中"), NULL);
 	PP->pend = pcb;
 	PCB* add = PP->pend;
 	for (int i = 1; i < n; i++) {
 		str.Format(_T("%d"), i);
 		createtime += int(rand() % 4);
-		int prio_round = int(rand() % 20);
+		int prio_round = int(rand() %5);
 		int needcputime = int(rand() % 10 + 1);
 		int neediotime = (int)(rand() % 10+1);
-		PCB *pcb = new PCB(_T("进程") + str + _T("号"), createtime, prio_round, 0, 0, needcputime, neediotime, (int)(rand() % 2), _T("等待中"), NULL);
+		PCB *pcb = new PCB(_T("进程") + str + _T("号"), createtime, prio_round,0, 0, 0, needcputime, neediotime, (int)(rand() % 2), _T("等待中"), NULL);
 		add->next = pcb;
 		add = add->next;
 	}
 	return PP;
 }
+
 
 
 void schedulingService::FIFO(int time,PCBPointer* PP)
@@ -175,7 +176,7 @@ void schedulingService::FIFO(int time,PCBPointer* PP)
 		}
 }
 
-void schedulingService::RR2(int time, PCBPointer* PP)
+void schedulingService::RR(int time, PCBPointer* PP,int timeSlice)
 {
 	PCB * tmppend = PP->pend;
 	//ready尾指针
@@ -206,34 +207,51 @@ void schedulingService::RR2(int time, PCBPointer* PP)
 			tmpfinish = tmpfinish->next;
 		}
 	}
-	//pend到时间的加入ioa或iob
+	//pend到时间的加入ready
 	while (PP->pend != NULL && PP->pend->createtime == time) {
-		tmppend = PP->pend->next;
-		if (PP->pend->iotype == 0) {
-			PP->pend->state = "等待进行A资源的IO";
-			if (PP->ioa == NULL) {
-				PP->ioa = PP->pend;
-				tmpioa = PP->pend;
-			}
-			else {
-				tmpioa->next = PP->pend;
-				tmpioa = tmpioa->next;
-			}
-			tmpioa->next = NULL;
+		if (PP->ready == NULL) {
+			PP->ready = PP->pend;
+			tmpready = PP->pend;
 		}
 		else {
-			PP->pend->state = "等待进行B资源的IO";
-			if (PP->iob == NULL) {
-				PP->iob = PP->pend;
-				tmpiob = PP->pend;
+			tmpready->next = PP->pend;
+			tmpready = tmpready->next;
+		}
+		tmpready->state = "等待cpu中";
+		PP->pend = PP->pend->next;
+		tmpready->next = NULL;
+	}
+	//执行进程如果有阻塞时间转入阻塞队列
+	if (PP->ready != NULL) {
+		if (PP->ready->neediotime > 0) {
+			tmpready = PP->ready->next;
+			if (PP->ready->iotype == 0) {
+				PP->ready->state = "等待进行A资源的IO";
+				if (PP->ioa == NULL) {
+					PP->ioa = PP->ready;
+					tmpioa = PP->ready;
+				}
+				else {
+					tmpioa->next = PP->ready;
+					tmpioa = tmpioa->next;
+				}
+				tmpioa->next = NULL;
 			}
 			else {
-				tmpiob->next = PP->pend;
-				tmpiob = tmpiob->next;
+				PP->ready->state = "等待进行B资源的IO";
+				if (PP->iob == NULL) {
+					PP->iob = PP->ready;
+					tmpiob = PP->ready;
+				}
+				else {
+					tmpiob->next = PP->ready;
+					tmpiob = tmpiob->next;
+				}
+				tmpiob->next = NULL;
 			}
-			tmpiob->next = NULL;
+			PP->ready = tmpready;
 		}
-		PP->pend = tmppend;
+
 	}
 	//ioa或iob执行完io操作的进入ready
 	if (PP->ioa != NULL) {
@@ -249,7 +267,6 @@ void schedulingService::RR2(int time, PCBPointer* PP)
 				tmpready->next = PP->ioa;
 				tmpready = tmpready->next;
 			}
-			tmpready->prio_round = 0;
 			tmpready->state = "等待cpu中";
 			PP->ioa = PP->ioa->next;
 			tmpready->next = NULL;
@@ -269,19 +286,17 @@ void schedulingService::RR2(int time, PCBPointer* PP)
 				tmpready->next = PP->iob;
 				tmpready = tmpready->next;
 			}
-			tmpready->prio_round = 0;
 			tmpready->state = "等待cpu中";
 			PP->iob = PP->iob->next;
 			tmpready->next = NULL;
 		}
 	}
-
 	//ready里执行完cpu操作的进入finish
 	if (PP->ready != NULL) {
 		PP->ready->state = "执行中";
 		PP->ready->needcputime -= 1;
 		PP->cpuratio++;
-		PP->ready->prio_round++;
+		PP->ready->timeSlice++;
 		if (PP->ready->needcputime == 0) {
 			PP->ready->state = "已完成";
 			if (PP->finish == NULL) {
@@ -295,13 +310,15 @@ void schedulingService::RR2(int time, PCBPointer* PP)
 			PP->ready = PP->ready->next;
 			tmpfinish->next = NULL;
 		}
-		if (PP->ready->prio_round == 2&&PP->ready!=tmpready) {
+		else if (PP->ready->timeSlice >= timeSlice) {
 			PP->ready->state = "等待CPU中";
-			PP->ready->prio_round = 0;
-			tmpready->next = PP->ready;
-			PP->ready = PP->ready->next;
-			tmpready = tmpready->next;
-			tmpready->next = NULL;
+			PP->ready->timeSlice = 0;
+			if (PP->ready->next != NULL) {
+				tmpready->next = PP->ready;
+				PP->ready = PP->ready->next;
+				tmpready = tmpready->next;
+				tmpready->next = NULL;
+			}
 		}
 	}
 }

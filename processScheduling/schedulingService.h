@@ -7,7 +7,7 @@ public:
 	schedulingService();
 	PCBPointer* createPCB(int n);
 	void FIFO(int time,PCBPointer* PP);
-	void RR2(int time, PCBPointer* PP);
+	void RR(int time, PCBPointer* PP,int timeSlice);
 	void PRIORITY(int time, PCBPointer* PP);
 	~schedulingService();
 };
