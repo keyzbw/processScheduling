@@ -44,7 +44,7 @@ public:
 	// 时钟速率
 	double clockRate;
 	//进程队列指针
-	PCBPointer* PP;
+	PCBPointer* PP=NULL;
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedButton3();

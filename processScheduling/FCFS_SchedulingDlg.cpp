@@ -24,6 +24,8 @@ FCFS_SchedulingDlg::FCFS_SchedulingDlg(CWnd* pParent /*=NULL*/)
 
 FCFS_SchedulingDlg::~FCFS_SchedulingDlg()
 {
+	if (PP != NULL)
+		delete PP;
 }
 
 void FCFS_SchedulingDlg::DoDataExchange(CDataExchange* pDX)
@@ -231,6 +233,8 @@ void FCFS_SchedulingDlg::OnBnClickedButton1()
 	UpdateData(TRUE);//数据从窗口更新
 	clock = 0;
 	schedulingService ss;
+	if (PP != NULL)
+		delete PP;
 	PP=ss.createPCB(5);
 
 	SetTimer(1, 1000 / clockRate, NULL);

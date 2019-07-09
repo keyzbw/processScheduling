@@ -45,7 +45,7 @@ public:
 	// 时钟速度
 	double clockRate;
 	//PCB队列指针
-	PCBPointer* PP;
+	PCBPointer* PP=NULL;
 protected:
 public:
 	afx_msg void OnBnClickedButton3();

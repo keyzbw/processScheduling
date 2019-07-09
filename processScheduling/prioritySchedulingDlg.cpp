@@ -24,6 +24,8 @@ prioritySchedulingDlg::prioritySchedulingDlg(CWnd* pParent /*=NULL*/)
 
 prioritySchedulingDlg::~prioritySchedulingDlg()
 {
+	if (PP != NULL)
+		delete PP;
 }
 
 void prioritySchedulingDlg::DoDataExchange(CDataExchange* pDX)
@@ -156,6 +158,8 @@ void prioritySchedulingDlg::OnBnClickedButton1()
 	UpdateData(TRUE);//数据从窗口更新
 	clock = 0;
 	schedulingService ss;
+	if (PP != NULL)
+		delete PP;	
 	PP = ss.createPCB(5);
 	SetTimer(1, 1000 / clockRate, NULL);
 	UpdateData(FALSE);//数据更新至窗口

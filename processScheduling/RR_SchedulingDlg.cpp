@@ -25,6 +25,8 @@ RR_SchedulingDlg::RR_SchedulingDlg(CWnd* pParent /*=NULL*/)
 
 RR_SchedulingDlg::~RR_SchedulingDlg()
 {
+	if (PP != NULL)
+		delete PP;
 }
 
 void RR_SchedulingDlg::DoDataExchange(CDataExchange* pDX)
@@ -128,6 +130,8 @@ void RR_SchedulingDlg::OnBnClickedButton1()
 	UpdateData(TRUE);//数据从窗口更新
 	clock = 0;
 	schedulingService ss;
+	if (PP != NULL)
+		delete PP;
 	PP = ss.createPCB(5);
 	SetTimer(1, 1000 / clockRate, NULL);
 	UpdateData(FALSE);//数据更新至窗口
