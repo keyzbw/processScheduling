@@ -189,7 +189,7 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			priority.Format(_T("%d"), p->prio_round);
 			m_list2.SetItemText(0, 2, priority);
 			m_list2.SetItemText(0, 3, createTime);
-			runTime.Format(_T("%d"), p->needcputime);
+			runTime.Format(_T("%d"), p->count);
 			m_list2.SetItemText(0, 4, runTime);
 			m_list2.SetItemText(0, 5, p->state);
 			//就绪进程显示
@@ -204,7 +204,7 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 				priority.Format(_T("%d"), p->prio_round);
 				m_list3.SetItemText(i, 2, priority);
 				m_list3.SetItemText(i, 3, createTime);
-				runTime.Format(_T("%d"), p->needcputime);
+				runTime.Format(_T("%d"), p->count);
 				m_list3.SetItemText(i, 4, runTime);
 				m_list3.SetItemText(i, 5, p->state);
 				i++;
@@ -222,7 +222,7 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			priority.Format(_T("%d"), p->prio_round);
 			m_list4.SetItemText(i, 2, priority);
 			m_list4.SetItemText(i, 3, createTime);
-			runTime.Format(_T("%d"), p->neediotime);
+			runTime.Format(_T("%d"), p->count);
 			m_list4.SetItemText(i, 4, runTime);
 			m_list4.SetItemText(i, 5, p->state);
 			p = p->next;
@@ -235,7 +235,7 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			createTime.Format(_T("%d"), p->createtime);
 			priority.Format(_T("%d"), p->prio_round);
 			m_list4.SetItemText(i, 2, priority);
-			runTime.Format(_T("%d"), p->neediotime);
+			runTime.Format(_T("%d"), p->count);
 			m_list4.SetItemText(i, 3, createTime);
 			m_list4.SetItemText(i, 4, runTime);
 			m_list4.SetItemText(i, 5, p->state);

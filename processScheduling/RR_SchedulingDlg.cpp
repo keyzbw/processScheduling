@@ -158,7 +158,7 @@ void RR_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list2.SetItemText(0, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
 			m_list2.SetItemText(0, 2, createTime);
-			runTime.Format(_T("%d"), p->needcputime);
+			runTime.Format(_T("%d"), p->count);
 			m_list2.SetItemText(0, 3, runTime);
 			m_list2.SetItemText(0, 4, p->state);
 			//就绪进程显示
@@ -171,7 +171,7 @@ void RR_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 				m_list3.SetItemText(i, 1, p->name);
 				createTime.Format(_T("%d"), p->createtime);
 				m_list3.SetItemText(i, 2, createTime);
-				runTime.Format(_T("%d"), p->needcputime);
+				runTime.Format(_T("%d"), p->count);
 				m_list3.SetItemText(i, 3, runTime);
 				m_list3.SetItemText(i, 4, p->state);
 				i++;
@@ -187,7 +187,7 @@ void RR_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list4.SetItemText(i, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
 			m_list4.SetItemText(i, 2, createTime);
-			runTime.Format(_T("%d"), p->neediotime);
+			runTime.Format(_T("%d"), p->count);
 			m_list4.SetItemText(i, 3, runTime);
 			m_list4.SetItemText(i, 4, p->state);
 			p = p->next;
@@ -199,7 +199,7 @@ void RR_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list4.SetItemText(i, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
 			m_list4.SetItemText(i, 2, createTime);
-			runTime.Format(_T("%d"), p->neediotime);
+			runTime.Format(_T("%d"), p->count);
 			m_list4.SetItemText(i, 3, runTime);
 			m_list4.SetItemText(i, 4, p->state);
 			p = p->next;
