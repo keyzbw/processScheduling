@@ -37,8 +37,8 @@ public:
 	int clock;
 	// CPU利用率
 	CString cpuRate;
-	// io利用率
-	CString ioRate;
+	// ioa利用率
+	CString ioaRate;
 	// 时间片
 	int timeSlice;
 	// 时钟速率
@@ -49,4 +49,6 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton2();
+	// IOB利用率
+	CString iobRate;
 };

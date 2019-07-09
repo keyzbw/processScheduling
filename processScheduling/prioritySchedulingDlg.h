@@ -40,8 +40,8 @@ public:
 	int clock;
 	// CUP利用率
 	CString cpuRate;
-	// IO利用率
-	CString ioRate;
+	// IOA利用率
+	CString ioaRate;
 	// 时钟速度
 	double clockRate;
 	//PCB队列指针
@@ -52,4 +52,6 @@ public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedButton2();
+	// IOB利用率
+	CString iobRate;
 };

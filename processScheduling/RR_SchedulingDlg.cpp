@@ -14,10 +14,11 @@ IMPLEMENT_DYNAMIC(RR_SchedulingDlg, CDialogEx)
 RR_SchedulingDlg::RR_SchedulingDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_RRSCHEDULINGDLG, pParent)
 	, clock(0)
-	, cpuRate(_T("100.00"))
-	, ioRate(_T("100.00"))
+	, cpuRate(_T("0.00"))
+	, ioaRate(_T("0.00"))
 	, timeSlice(1)
 	, clockRate(1)
+	, iobRate(_T("0.00"))
 {
 
 }
@@ -36,9 +37,10 @@ void RR_SchedulingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST5, m_list5);
 	DDX_Text(pDX, IDC_EDIT1, clock);
 	DDX_Text(pDX, IDC_EDIT2, cpuRate);
-	DDX_Text(pDX, IDC_EDIT3, ioRate);
+	DDX_Text(pDX, IDC_EDIT3, ioaRate);
 	DDX_Text(pDX, IDC_EDIT6, timeSlice);
 	DDX_Text(pDX, IDC_EDIT4, clockRate);
+	DDX_Text(pDX, IDC_EDIT5, iobRate);
 }
 
 
@@ -220,9 +222,14 @@ void RR_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			i++;
 		}
 		//cup利用率显示
-		double cRate;
+		//cup、io利用率显示
+		double cRate, iaRate, ibRate;
 		cRate = (double)PP->cpuratio / (double)clock;
 		cpuRate.Format(_T("%0.2lf"), cRate * 100);
+		iaRate = (double)PP->ioaratio / (double)clock;
+		ioaRate.Format(_T("%0.2lf"), iaRate * 100);
+		ibRate = (double)PP->iobratio / (double)clock;
+		iobRate.Format(_T("%0.2lf"), ibRate * 100);
 		break;
 	}
 	UpdateData(FALSE);//数据更新至窗口

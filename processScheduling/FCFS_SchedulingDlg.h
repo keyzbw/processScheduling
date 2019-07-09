@@ -38,8 +38,8 @@ public:
 	int clock;
 	// cpu利用率
 	CString cpuRate;
-	// IO利用率
-	CString ioRate;
+	// IOA利用率
+	CString ioaRate;
 	// 时钟速度
 	double clockRate;
 	//进程控制块列表
@@ -48,4 +48,6 @@ public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton3();
+	// IOBRate
+	CString iobRate;
 };

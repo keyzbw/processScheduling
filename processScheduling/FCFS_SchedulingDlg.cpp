@@ -14,9 +14,10 @@ IMPLEMENT_DYNAMIC(FCFS_SchedulingDlg, CDialogEx)
 FCFS_SchedulingDlg::FCFS_SchedulingDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_FCFSSCHEDULINGDLG, pParent)
 	, clock(0)
-	, cpuRate(_T("100.00"))
-	, ioRate(_T("100.00"))
+	, cpuRate(_T("0.00"))
+	, ioaRate(_T("0.00"))
 	, clockRate(1)
+	, iobRate(_T("0.00"))
 {
 
 }
@@ -35,8 +36,9 @@ void FCFS_SchedulingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST5, m_list5);
 	DDX_Text(pDX, IDC_EDIT1, clock);
 	DDX_Text(pDX, IDC_EDIT2, cpuRate);
-	DDX_Text(pDX, IDC_EDIT3, ioRate);
+	DDX_Text(pDX, IDC_EDIT3, ioaRate);
 	DDX_Text(pDX, IDC_EDIT4, clockRate);
+	DDX_Text(pDX, IDC_EDIT5, iobRate);
 }
 
 
@@ -143,7 +145,7 @@ void FCFS_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list2.SetItemText(0, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
 			m_list2.SetItemText(0, 2, createTime);
-			runTime.Format(_T("%d"), p->needcputime);
+			runTime.Format(_T("%d"), p->count);
 			m_list2.SetItemText(0, 3, runTime);
 			m_list2.SetItemText(0, 4, p->state);
 			//就绪进程显示
@@ -156,7 +158,7 @@ void FCFS_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 				m_list3.SetItemText(i, 1, p->name);
 				createTime.Format(_T("%d"), p->createtime);
 				m_list3.SetItemText(i, 2, createTime);
-				runTime.Format(_T("%d"), p->needcputime);
+				runTime.Format(_T("%d"), p->count);
 				m_list3.SetItemText(i, 3, runTime);
 				m_list3.SetItemText(i, 4, p->state);
 				i++;
@@ -172,7 +174,7 @@ void FCFS_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list4.SetItemText(i, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
 			m_list4.SetItemText(i, 2, createTime);
-			runTime.Format(_T("%d"), p->neediotime);
+			runTime.Format(_T("%d"), p->count);
 			m_list4.SetItemText(i, 3, runTime);
 			m_list4.SetItemText(i, 4, p->state);
 			p = p->next;
@@ -184,7 +186,7 @@ void FCFS_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list4.SetItemText(i, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
 			m_list4.SetItemText(i, 2, createTime);
-			runTime.Format(_T("%d"), p->neediotime);
+			runTime.Format(_T("%d"), p->count);
 			m_list4.SetItemText(i, 3, runTime);
 			m_list4.SetItemText(i, 4, p->state);
 			p = p->next;
@@ -206,10 +208,14 @@ void FCFS_SchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			p = p->next;
 			i++;
 		}
-		//cup利用率显示
-		double cRate;
+		//cup、io利用率显示
+		double cRate,iaRate,ibRate;
 		cRate = (double)PP->cpuratio / (double)clock;
 		cpuRate.Format(_T("%0.2lf"),cRate*100);
+		iaRate=(double)PP->ioaratio / (double)clock;
+		ioaRate.Format(_T("%0.2lf"), iaRate * 100);
+		ibRate = (double)PP->iobratio / (double)clock;
+		iobRate.Format(_T("%0.2lf"), ibRate * 100);
 		break;
 	}
 	UpdateData(FALSE);//数据更新至窗口
