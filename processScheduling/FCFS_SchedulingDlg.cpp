@@ -236,7 +236,18 @@ void FCFS_SchedulingDlg::OnBnClickedButton1()
 	if (PP != NULL)
 		delete PP;
 	PP=ss.createPCB(5);
-
+	/*
+	//显示创建数据
+	CString mess,tmpm;
+	PCB* tmp=PP->pend;
+	mess.Format(_T("进程名 创建时间 需要cpu时间 需要io种类 需要io时间\n"));
+	while (tmp != NULL) {
+		tmpm.Format(_T("%s\t%d\t%d\t%d\t%d\t\n"), tmp->name, tmp->createtime, tmp->needcputime, tmp->iotype, tmp->neediotime);
+		mess += tmpm;
+		tmp = tmp->next;
+	}
+	MessageBox(mess);
+	*/
 	SetTimer(1, 1000 / clockRate, NULL);
 	UpdateData(FALSE);//数据更新至窗口
 }

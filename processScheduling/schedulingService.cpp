@@ -8,17 +8,17 @@ schedulingService::schedulingService()
 }
 
 PCBPointer* schedulingService::createPCB(int n)
-{
+{//创建进程
 	if (n <= 0)
 		return NULL;
 	PCBPointer* PP = new PCBPointer();
 	int createtime = 0;
 	CString str;
-	//srand((unsigned int)(time(NULL)));
+	srand((unsigned int)(time(NULL)));
 	//创建表头
 	str.Format(_T("%d"), 0);
 	createtime += int(rand() % 4);
-	int prio_round = int(rand() % 5);
+	int prio_round = int(rand() % 10);
 	int needcputime = int(rand() % 10 + 1);
 	int neediotime = (int)(rand() % 10+1);
 	PCB *pcb = new PCB(_T("进程") + str + _T("号"), createtime, prio_round,0, 0, 0, needcputime, neediotime, (int)(rand() % 2), _T("等待中"), NULL);
@@ -27,7 +27,7 @@ PCBPointer* schedulingService::createPCB(int n)
 	for (int i = 1; i < n; i++) {
 		str.Format(_T("%d"), i);
 		createtime += int(rand() % 4);
-		int prio_round = int(rand() %5);
+		int prio_round = int(rand() %10);
 		int needcputime = int(rand() % 10 + 1);
 		int neediotime = (int)(rand() % 10+1);
 		PCB *pcb = new PCB(_T("进程") + str + _T("号"), createtime, prio_round,0, 0, 0, needcputime, neediotime, (int)(rand() % 2), _T("等待中"), NULL);
@@ -121,7 +121,6 @@ void schedulingService::FIFO(int time,PCBPointer* PP)
 			PP->ioa->state = "进行A资源IO中";
 			PP->ioa->neediotime -= 1;
 			PP->ioaratio++;
-			PP->ioa->count++;
 			if (PP->ioa->neediotime == 0) {
 				if (PP->ready == NULL) {
 					PP->ready = PP->ioa;
@@ -141,7 +140,6 @@ void schedulingService::FIFO(int time,PCBPointer* PP)
 			PP->iob->state = "进行B资源IO中";
 			PP->iob->neediotime -= 1;
 			PP->iobratio++;
-			PP->iob->count++;
 			if (PP->iob->neediotime == 0) {
 				if (PP->ready == NULL) {
 					PP->ready = PP->iob;
@@ -157,12 +155,13 @@ void schedulingService::FIFO(int time,PCBPointer* PP)
 			}
 		}
 		
-	//ready里执行完cpu操作的进入finish
+	//执行进程
 		if (PP->ready != NULL) {
 			PP->ready->state = "执行中";
 			PP->ready->needcputime -= 1;
 			PP->ready->count++;
 			PP->cpuratio++;
+			//执行完cpu操作的进程进入finish
 			if (PP->ready->needcputime == 0) {
 				PP->ready->state = "已完成";
 				if (PP->finish == NULL) {
@@ -260,7 +259,6 @@ void schedulingService::RR(int time, PCBPointer* PP,int timeSlice)
 	if (PP->ioa != NULL) {
 		PP->ioa->state = "进行A资源IO中";
 		PP->ioa->neediotime -= 1;
-		PP->ioa->count++;
 		PP->ioaratio++;
 		if (PP->ioa->neediotime == 0) {
 			if (PP->ready == NULL) {
@@ -280,7 +278,6 @@ void schedulingService::RR(int time, PCBPointer* PP,int timeSlice)
 	if (PP->iob != NULL) {
 		PP->iob->state = "进行B资源IO中";
 		PP->iob->neediotime -= 1;
-		PP->iob->count++;
 		PP->iobratio++;
 		if (PP->iob->neediotime == 0) {
 			if (PP->ready == NULL) {
@@ -296,13 +293,14 @@ void schedulingService::RR(int time, PCBPointer* PP,int timeSlice)
 			tmpready->next = NULL;
 		}
 	}
-	//ready里执行完cpu操作的进入finish
+	//执行进程
 	if (PP->ready != NULL) {
 		PP->ready->state = "执行中";
 		PP->ready->needcputime -= 1;
 		PP->cpuratio++;
 		PP->ready->count++;
 		PP->ready->timeSlice++;
+		//执行完cpu操作的进程进入finish
 		if (PP->ready->needcputime == 0) {
 			PP->ready->state = "已完成";
 			if (PP->finish == NULL) {
@@ -317,6 +315,7 @@ void schedulingService::RR(int time, PCBPointer* PP,int timeSlice)
 			tmpfinish->next = NULL;
 		}
 		else if (PP->ready->timeSlice >= timeSlice) {
+			//时间片数用完后进程进入队列尾
 			PP->ready->state = "等待CPU中";
 			PP->ready->timeSlice = 0;
 			if (PP->ready->next != NULL) {
@@ -416,7 +415,6 @@ void schedulingService::PRIORITY(int time, PCBPointer* PP)
 	//ioa或iob执行完io操作的进入ready
 	if (PP->ioa != NULL) {
 		PP->ioa->state = "进行A资源IO中";
-		PP->ioa->count++;
 		PP->ioa->neediotime -= 1;
 		PP->ioaratio++;
 		if (PP->ioa->neediotime == 0) {
@@ -451,7 +449,6 @@ void schedulingService::PRIORITY(int time, PCBPointer* PP)
 		PP->iob->state = "进行B资源IO中";
 		PP->iob->neediotime -= 1;
 		PP->iobratio++;
-		PP->iob->count++;
 		if (PP->iob->neediotime == 0) {
 			tmpiob = PP->iob->next;
 			PP->iob->state = "等待cpu中";
@@ -480,12 +477,14 @@ void schedulingService::PRIORITY(int time, PCBPointer* PP)
 		}
 	}
 
-	//ready里执行完cpu操作的进入finish
+	//执行进程
 	if (PP->ready != NULL) {
 		PP->ready->state = "执行中";
 		PP->ready->needcputime -= 1;
 		PP->cpuratio++;
 		PP->ready->count++;
+		PP->ready->prio_round -= 3;
+		//ready里执行完cpu操作的进入finish
 		if (PP->ready->needcputime == 0) {
 			PP->ready->state = "已完成";
 			if (PP->finish == NULL) {
@@ -499,8 +498,25 @@ void schedulingService::PRIORITY(int time, PCBPointer* PP)
 			PP->ready = PP->ready->next;
 			tmpfinish->next = NULL;
 		}
+		else if (PP->ready->next != NULL) {
+			//和后面的就绪进程比较优先级
+			if (PP->ready->prio_round < PP->ready->next->prio_round) {
+				PP->ready->state = "等待cpu中";
+				PP->ready->next->state = "执行中";
+				tmpready = PP->ready;
+				while (tmpready->next != NULL&&tmpready->next->prio_round > PP->ready->prio_round) {
+					tmpready = tmpready->next;
+				}
+				PCB* tmptmpready = PP->ready;
+				PP->ready = PP->ready->next;
+				tmptmpready->next = tmpready->next;
+				tmpready->next = tmptmpready;
+			}
+		}
 	}
+	
 }
+
 
 
 schedulingService::~schedulingService()

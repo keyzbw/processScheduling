@@ -161,6 +161,18 @@ void prioritySchedulingDlg::OnBnClickedButton1()
 	if (PP != NULL)
 		delete PP;	
 	PP = ss.createPCB(5);
+	/*
+	//显示创建数据
+	CString mess, tmpm;
+	PCB* tmp = PP->pend;
+	mess.Format(_T("进程名 创建时间 初始优先级 需要cpu时间 需要io种类 需要io时间\n"));
+	while (tmp != NULL) {
+		tmpm.Format(_T("%s\t%d\t%d\t%d\t%d\t%d\t\n"), tmp->name, tmp->createtime, tmp->prio_round, tmp->needcputime, tmp->iotype, tmp->neediotime);
+		mess += tmpm;
+		tmp = tmp->next;
+	}
+	MessageBox(mess);
+	*/
 	SetTimer(1, 1000 / clockRate, NULL);
 	UpdateData(FALSE);//数据更新至窗口
 	// TODO: 在此添加控件通知处理程序代码
@@ -187,6 +199,8 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 		//执行进程显示
 		m_list2.InsertItem(0, _T(""));
 		m_list2.SetItemText(0, 0, _T("执行进程"));
+		m_list3.InsertItem(0, _T(""));
+		m_list3.SetItemText(0, 0, _T("就绪进程"));
 		if (p != NULL) {
 			m_list2.SetItemText(0, 1, p->name);
 			createTime.Format(_T("%d"), p->createtime);
@@ -198,8 +212,6 @@ void prioritySchedulingDlg::OnTimer(UINT_PTR nIDEvent)
 			m_list2.SetItemText(0, 5, p->state);
 			//就绪进程显示
 			i = 1;
-			m_list3.InsertItem(0, _T(""));
-			m_list3.SetItemText(0, 0, _T("就绪进程"));
 			while (p->next != NULL) {
 				p = p->next;
 				m_list3.InsertItem(i, _T(""));
